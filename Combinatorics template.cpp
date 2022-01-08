@@ -81,16 +81,19 @@ using namespace __gnu_pbds;
     const ll N = 3e5 + 7;
 
 
-    int fact[N];
-    int inv_fact[N];
+    ll fact[N];
+    ll inv_fact[N];
+
+    // specify mod to use "M" or "MM" or other
+    const ll MOD = ___; 
 
     ll power(ll a, ll b) {
         if(b == 0) return 1;
         
         ll t = power(a, b/2);
-        t = (t * t) % M;
+        t = (t * t) % MOD;
 
-        if(b & 1) t = (t * a) % M;
+        if(b & 1) t = (t * a) % MOD;
 
         return t;
     }
@@ -98,11 +101,11 @@ using namespace __gnu_pbds;
     void fun() {
         fact[0] = 1;
         rep(i, 1, N){
-            fact[i] = (fact[i-1] * i) % M;
+            fact[i] = (fact[i-1] * i) % MOD;
         }
-        inv_fact[N-1] = power(fact[N-1], M - 2);
+        inv_fact[N-1] = power(fact[N-1], MOD - 2);
         rrep(i, N-2, 0) {
-            inv_fact[i] = (inv_fact[i+1] * (i + 1)) % M;  
+            inv_fact[i] = (inv_fact[i+1] * (i + 1)) % MOD;  
         }
     }
     
@@ -110,9 +113,9 @@ using namespace __gnu_pbds;
         if(n < r || n < 0 || r < 0) return 0;
 
         ll ans = 1;
-        ans = ((ans % M) * (fact[n] % M)) % M;
-        ans = ((ans % M) * (inv_fact[n - r] % M)) % M;
-        ans = ((ans % M) * (inv_fact[r] % M)) % M;
+        ans = ((ans % MOD) * (fact[n] % MOD)) % MOD;
+        ans = ((ans % MOD) * (inv_fact[n - r] % MOD)) % MOD;
+        ans = ((ans % MOD) * (inv_fact[r] % MOD)) % MOD;
         
         return ans;
     }
